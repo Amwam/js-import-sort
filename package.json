@@ -1,0 +1,24 @@
+{
+  "name": "js-import-sort",
+  "author": "Amit Shah",
+  "version": "0.0.1",
+  "description": "A jS Codemode to sort/organise imports",
+  "repository": "https://github.com/Amwam/js-import-sort",
+  "main": "./index.js",
+  "scripts": {
+    "test": " jest"
+  },
+  "bin": {
+    "js-import-sort": "./cli.js"
+  },
+  "dependencies": {
+    "app-root-path": "^1.2.1",
+    "jscodeshift": "^0.3.25",
+    "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "jest": "^13.2.3",
+    "jest-cli": "^13.2.3"
+  },
+  "license": "MIT"
+}
