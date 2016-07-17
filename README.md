@@ -1,4 +1,4 @@
-JS-Import-Sort  ![Travis-CI](https://travis-ci.org/Amwam/js-import-sort.svg?branch=master)
+JS-Import-Sort  ![Travis-CI](https://travis-ci.org/Amwam/js-import-sort.svg?branch=master) [![npm version](https://badge.fury.io/js/js-import-sort.svg)](https://badge.fury.io/js/js-import-sort)
 ---
 
 A JS codemod to sort imports

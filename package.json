@@ -1,7 +1,7 @@
 {
   "name": "js-import-sort",
   "author": "Amit Shah",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A jS Codemode to sort/organise imports",
   "repository": "https://github.com/Amwam/js-import-sort",
   "main": "./index.js",
