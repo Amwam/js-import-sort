@@ -17,7 +17,7 @@
     "lodash": "^4.13.1"
   },
   "devDependencies": {
-    "jest": "^14.0.1",
+    "jest": "^15.0.2",
     "jest-cli": "^15.0.1"
   },
   "license": "MIT"
