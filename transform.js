@@ -62,10 +62,23 @@ module.exports = function(file, api) {
                 };
             }
             else {
-                newImports[source].specifiers.push({
-                    local: specifier.local.name,
-                    imported: specifier.imported.name
+                // Check the specifier has not all ready been placed in
+                let found = false
+                newImports[source].specifiers.forEach(spec => {
+                    if (spec.local === specifier.local.name) {
+                        found = true;
+                    }
+                    if (spec.imported === specifier.imported.name) {
+                        found = true;
+                    }
                 });
+
+                if (!found) {
+                    newImports[source].specifiers.push({
+                        local: specifier.local.name,
+                        imported: specifier.imported.name
+                    });
+                }
             }
         });
     });
