@@ -18,3 +18,5 @@ import SomeClass from './MyModule';
 import AnotherClass from '../../Module1';
 
 import * as util from 'util';
+
+import 'yyy';
