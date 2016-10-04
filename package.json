@@ -20,5 +20,8 @@
     "jest": "^16.0.0",
     "jest-cli": "^16.0.0"
   },
+  "jest": {
+    "collectCoverage": true
+  },
   "license": "MIT"
 }
