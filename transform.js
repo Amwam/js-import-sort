@@ -1,6 +1,7 @@
 'use strict';
 const builtInModules = require('./lib/builtInModules').default;
 const thirdPartyModules = require('./lib/thirdPartyModules').default;
+const importSortFunc = require('./lib/importSort').default;
 
 module.exports = function(file, api) {
     function createImportStatement(moduleName, variableName, propName) {
@@ -103,17 +104,6 @@ module.exports = function(file, api) {
         }
     });
 
-    const importSortFunc = (a, b) => {
-        if (a.startsWith('.') && !b.startsWith('.')) {
-            return 1
-        }
-        else if (b.startsWith('.') && !a.startsWith('.')) {
-            return -1
-        }
-        return a.localeCompare(b)
-
-    };
-
     const nodekeys = Object.keys(nodeModules).sort(importSortFunc).reverse();
     const thirdkeys = Object.keys(thirdPartyImports).sort(importSortFunc).reverse();
     const firstkeys = Object.keys(firstPartyImports).sort(importSortFunc).reverse();
@@ -152,3 +142,4 @@ module.exports = function(file, api) {
     const source = root.toSource({ quote: 'single' });
     return source.replace(/\/\/\$\$BLANK_LINE/g, '');
 };
+
