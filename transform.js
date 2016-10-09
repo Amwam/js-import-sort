@@ -139,7 +139,8 @@ module.exports = function(file, api) {
     });
 
     root.get().node.comments = comments;
-    const source = root.toSource({ quote: 'single' });
+    let source = root.toSource({ quote: 'single' });
+    source =  source.replace(/\/\/\$\$BLANK_LINE\n\n/g, '//$$$BLANK_LINE\n');
     return source.replace(/\/\/\$\$BLANK_LINE/g, '');
 };
 
