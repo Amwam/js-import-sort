@@ -13,6 +13,21 @@ const argv = require('nomnom')
             full: 'ignore',
             list: true,
         },
+        verbose: {
+            abbr: 'v',
+            full: 'verbose',
+            flag: true,
+        },
+        dry: {
+            abbr: 'd',
+            full: 'dry',
+            flag: true,
+        },
+        print: {
+            abbr: 'p',
+            full: 'print',
+            flag: true,
+        },
     })
     .parse();
 

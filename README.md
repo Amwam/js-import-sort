@@ -56,3 +56,9 @@ Imports are separated by node, dependencies in `package.json`, other, and relati
 To run, just run:
 
     js-import-sort --path ./*
+
+## Debugging
+`js-import-sort` supports 3 of the debugging tools from jscodesift, `dry`, `print` and `verbose` which can be used in any combination
+
+use `--dry` and `--print` to view the results of the changes before they are applied
+
