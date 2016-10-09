@@ -39,6 +39,11 @@ module.exports = function(file, api) {
     const root = j(file.source);
     const imports = root.find(j.ImportDeclaration);
 
+    if (imports.size() === 0) {
+        // Nothing to do, leave as is
+        return file.source;
+    }
+
     const newImports = {};
 
     imports.forEach(i => {
