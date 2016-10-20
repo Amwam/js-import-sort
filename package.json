@@ -13,8 +13,7 @@
   },
   "dependencies": {
     "find-root": "^1.0.0",
-    "jscodeshift": "^0.3.25",
-    "lodash": "^4.13.1"
+    "jscodeshift": "^0.3.25"
   },
   "devDependencies": {
     "jest": "^16.0.0",

@@ -1,6 +1,6 @@
 const Runner = require('jscodeshift/dist/Runner');
-const  omit  = require('lodash').omit;
 const resolve = require('path').resolve;
+const omit  = require('lib/omit');
 
 module.exports = args => {
     const options = Object.assign({ quote: 'single' }, omit(args, ['_', 'transform', 'path']));
