@@ -16,7 +16,7 @@
     "jscodeshift": "^0.3.25"
   },
   "devDependencies": {
-    "jest": "^17.0.0",
+    "jest": "^18.1.0",
     "jest-cli": "^17.0.0"
   },
   "jest": {
