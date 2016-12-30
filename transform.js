@@ -2,75 +2,84 @@
 const builtInModules = require('./lib/builtInModules').default;
 const thirdPartyModules = require('./lib/thirdPartyModules').default;
 const importSortFunc = require('./lib/importSort').default;
+const jscodeshift = require('jscodeshift');
 
-module.exports = function(file, api) {
-    function createImportStatement(moduleName, variableName, propName) {
-        let declaration, variable, idIdentifier, nameIdentifier;
+function createImportStatement(moduleName, variableName, propName, kind) {
+    let declaration;
 
-        // if no variable name, return `import '<module>'`
-        if (!variableName) {
-            declaration = j.importDeclaration([], j.literal(moduleName));
-            return declaration;
+    const variableIds = variableName.map(function(v) {
+        return jscodeshift.importSpecifier(
+            jscodeshift.identifier(v.imported),
+            jscodeshift.identifier(v.local)
+        );
+    });
+
+    if (propName) {
+        const namespace = propName.namespace;
+        const name = propName.name;
+        let identifier;
+        if (name) {
+            identifier = jscodeshift.identifier(name);
+            variableIds.unshift(jscodeshift.importDefaultSpecifier(identifier, identifier));
         }
-
-        const variableIds = variableName.map(function(v) {
-            return j.importSpecifier(j.identifier(v.imported), j.identifier(v.local));
-        });
-
-        if (propName) {
-            var namespace = propName.namespace;
-            var name = propName.name;
-            if (name) {
-                var identifier = j.identifier(name);
-                variableIds.unshift(j.importDefaultSpecifier(identifier, identifier));
-            }
-            else if (namespace) {
-                var identifier = j.identifier(namespace);
-                variableIds.unshift(j.importNamespaceSpecifier(identifier, identifier));
-            }
+        else if (namespace) {
+            identifier = jscodeshift.identifier(namespace);
+            variableIds.unshift(jscodeshift.importNamespaceSpecifier(identifier, identifier));
         }
-
-        declaration = j.importDeclaration(variableIds, j.literal(moduleName));
-
-        return declaration;
     }
 
+    declaration = jscodeshift.importDeclaration(variableIds, jscodeshift.literal(moduleName));
+    declaration.importKind = kind;
+
+    return declaration;
+}
+
+module.exports = function(file, api) {
     const j = api.jscodeshift;
     const root = j(file.source);
     const imports = root.find(j.ImportDeclaration);
 
+    // No imports, leave as is
     if (imports.size() === 0) {
-        // Nothing to do, leave as is
         return file.source;
     }
 
+    // Load all imports
+    // Object is separated by type
     const newImports = {};
 
     imports.forEach(i => {
         const node = i.node;
         const source = node.source.value;
-        if (!newImports[source]) {
-            newImports[source] = {
-                'default': null,
-                'specifiers': [],
+        const kind = node.importKind || 'value';
+
+        if (!newImports[kind]) {
+            newImports[kind] = {
+            };
+        }
+
+        if (!newImports[kind][source]) {
+            newImports[kind][source] = {
+                default: null,
+                specifiers: [],
             };
         }
 
         node.specifiers.forEach(specifier => {
             if (specifier.type === 'ImportDefaultSpecifier') {
-                newImports[source].default = {
+                newImports[kind][source].default = {
                     name: specifier.local.name
                 };
             }
             else if (specifier.type === 'ImportNamespaceSpecifier') {
-                newImports[source].default = {
+                newImports[kind][source].default = {
                     namespace: specifier.local.name,
                 };
             }
             else {
                 // Check the specifier has not all ready been placed in
-                let found = false
-                newImports[source].specifiers.forEach(spec => {
+                let found = false;
+                newImports[kind][source].specifiers.forEach(spec => {
                     if (spec.local === specifier.local.name) {
                         found = true;
                     }
@@ -80,7 +89,7 @@ module.exports = function(file, api) {
                 });
 
                 if (!found) {
-                    newImports[source].specifiers.push({
+                    newImports[kind][source].specifiers.push({
                         local: specifier.local.name,
                         imported: specifier.imported.name
                     });
@@ -89,12 +98,36 @@ module.exports = function(file, api) {
         });
     });
 
+    let outputImports = [];
+    outputImports = outputImports.concat(createOutputImports(newImports['type'], 'type'));
+    outputImports = outputImports.concat(createOutputImports(newImports['value'], 'value'));
+
+    const comments = root.find(j.Program).get('body', 0).node.comments;
+    root.find(j.ImportDeclaration).remove();
+    outputImports.forEach(x => {
+        const body = root.get().value.program.body;
+        body.unshift(x);
+    });
+
+    root.get().node.comments = comments;
+    let source = root.toSource({ quote: 'single' });
+    source = source.replace(/\/\/\$\$BLANK_LINE\n\n/g, '//$$$BLANK_LINE\n');
+    return source.replace(/\/\/\$\$BLANK_LINE/g, '');
+};
+
+function createOutputImports(newImports, kind) {
+    if (!newImports) {
+        return [];
+    }
+
     const nodeModules = {};
     const thirdPartyImports = {};
     const firstPartyImports = {};
     const localImports = {};
 
-    Object.keys(newImports).forEach((key)=> {
+    const outputImports = [];
+
+    Object.keys(newImports).forEach((key) => {
         if (builtInModules.indexOf(key) > -1) {
             nodeModules[key] = newImports[key];
         }
@@ -109,43 +142,32 @@ module.exports = function(file, api) {
         }
     });
 
-    const nodekeys = Object.keys(nodeModules).sort(importSortFunc).reverse();
-    const thirdkeys = Object.keys(thirdPartyImports).sort(importSortFunc).reverse();
-    const firstkeys = Object.keys(firstPartyImports).sort(importSortFunc).reverse();
-    const localkeys = Object.keys(localImports).sort(importSortFunc).reverse();
+    const nodeKeys = Object.keys(nodeModules).sort(importSortFunc).reverse();
+    const thirdKeys = Object.keys(thirdPartyImports).sort(importSortFunc).reverse();
+    const firstKeys = Object.keys(firstPartyImports).sort(importSortFunc).reverse();
+    const localKeys = Object.keys(localImports).sort(importSortFunc).reverse();
 
     const blankLine = '//$$BLANK_LINE';
-
-    const outputImports = [];
 
     function pushImports(keys) {
         if (keys.length > 0) {
             outputImports.push(blankLine);
         }
+
         keys.forEach(key => {
             outputImports.push(
                 createImportStatement(key,
-                    newImports[key].specifiers.sort((a, b)=>(a.imported.localeCompare(b.imported))),
-                    newImports[key].default)
+                    newImports[key].specifiers.sort((a, b) => (a.imported.localeCompare(b.imported))),
+                    newImports[key].default,
+                    kind)
             );
         });
     }
 
-    pushImports(localkeys);
-    pushImports(firstkeys);
-    pushImports(thirdkeys);
-    pushImports(nodekeys);
+    pushImports(localKeys);
+    pushImports(firstKeys);
+    pushImports(thirdKeys);
+    pushImports(nodeKeys);
 
-    const  comments = root.find(j.Program).get('body', 0).node.comments;
-    root.find(j.ImportDeclaration).remove();
-    outputImports.forEach(x => {
-        const body = root.get().value.program.body;
-        body.unshift(x);
-    });
-
-    root.get().node.comments = comments;
-    let source = root.toSource({ quote: 'single' });
-    source =  source.replace(/\/\/\$\$BLANK_LINE\n\n/g, '//$$$BLANK_LINE\n');
-    return source.replace(/\/\/\$\$BLANK_LINE/g, '');
-};
-
+    return outputImports;
+}

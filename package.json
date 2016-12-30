@@ -16,8 +16,7 @@
     "jscodeshift": "^0.3.25"
   },
   "devDependencies": {
-    "jest": "^18.1.0",
-    "jest-cli": "^18.1.0"
+    "jest": "^18.1.0"
   },
   "jest": {
     "collectCoverage": true

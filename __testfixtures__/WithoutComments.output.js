@@ -1,5 +1,7 @@
 import * as util from 'util';
 
+import 'jscodeshift';
+
 import Main, {ZMain} from 'aaaa';
 import * as someDefault from 'bbb';
 import {a as b} from 'ccc';
