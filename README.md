@@ -10,7 +10,7 @@ This will transform a JS file, sorting and organising its imports (ES2015/ES6).
 
 Example:
 
-```
+```javascript
     import Main from 'aaaa';
     import {ZMain}  from 'aaaa';
        
@@ -37,7 +37,7 @@ Example:
 
 Becomes:
  
-```
+```javascript
    import * as util from 'util';
    
    import Main, {ZMain} from 'aaaa';
