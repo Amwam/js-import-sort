@@ -6,7 +6,9 @@
   "repository": "https://github.com/Amwam/js-import-sort",
   "main": "./index.js",
   "scripts": {
-    "test": " jest"
+    "test": "jest",
+    "lint": "eslint ./",
+    "prettier": "prettier --single-quote --trailing-comma es5 --write ./*.js"
   },
   "bin": {
     "js-import-sort": "./cli.js"
@@ -16,10 +18,49 @@
     "jscodeshift": "^0.3.30"
   },
   "devDependencies": {
-    "jest": "^19.0.0"
+    "eslint": "^3.18.0",
+    "eslint-config-prettier": "^1.5.0",
+    "eslint-plugin-jest": "^19.0.1",
+    "jest": "^18.1.0",
+    "prettier": "^0.22.0"
   },
   "jest": {
     "collectCoverage": true
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true,
+      "jest/globals": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
+    "plugins": [
+      "jest"
+    ],
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "rules": {
+      "indent": [
+        "error",
+        2
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ]
+    }
   },
   "license": "MIT"
 }
