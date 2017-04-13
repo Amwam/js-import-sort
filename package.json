@@ -21,7 +21,7 @@
     "eslint": "^3.18.0",
     "eslint-config-prettier": "^1.5.0",
     "eslint-plugin-jest": "^19.0.1",
-    "jest": "^18.1.0",
+    "jest": "^19.0.2",
     "prettier": "^1.0.0"
   },
   "jest": {
