@@ -167,7 +167,8 @@ function createOutputImports(newImports, kind) {
         createImportStatement(
           key,
           newImports[key].specifiers.sort((a, b) =>
-            a.imported.localeCompare(b.imported)),
+            a.imported.localeCompare(b.imported)
+          ),
           newImports[key].default,
           kind
         )

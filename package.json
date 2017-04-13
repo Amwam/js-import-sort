@@ -8,7 +8,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint ./",
-    "prettier": "prettier --single-quote --trailing-comma es5 --write ./*.js"
+    "prettier": "prettier --single-quote --trailing-comma es5 --semi --write ./*.js"
   },
   "bin": {
     "js-import-sort": "./cli.js"
