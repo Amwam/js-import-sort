@@ -1,7 +1,9 @@
-JS-Import-Sort  ![Travis-CI](https://travis-ci.org/Amwam/js-import-sort.svg?branch=master) [![npm version](https://badge.fury.io/js/js-import-sort.svg)](https://badge.fury.io/js/js-import-sort)
+JS-Import-Sort  
+
+![Travis-CI](https://travis-ci.org/Amwam/js-import-sort.svg?branch=master) [![npm version](https://badge.fury.io/js/js-import-sort.svg)](https://badge.fury.io/js/js-import-sort) [![Greenkeeper badge](https://badges.greenkeeper.io/Amwam/js-import-sort.svg)](https://greenkeeper.io/)
+
 ---
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Amwam/js-import-sort.svg)](https://greenkeeper.io/)
 
 A JS codemod to sort imports
 
