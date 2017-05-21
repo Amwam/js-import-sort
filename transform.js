@@ -1,8 +1,8 @@
-'use strict';
-const builtInModules = require('./lib/builtInModules').default;
-const thirdPartyModules = require('./lib/thirdPartyModules').default;
-const importSortFunc = require('./lib/importSort').default;
-const jscodeshift = require('jscodeshift');
+"use strict";
+const builtInModules = require("./lib/builtInModules").default;
+const thirdPartyModules = require("./lib/thirdPartyModules").default;
+const importSortFunc = require("./lib/importSort").default;
+const jscodeshift = require("jscodeshift");
 
 function createImportStatement(moduleName, variableName, propName, kind) {
   let declaration;
@@ -57,7 +57,7 @@ module.exports = function(file, api) {
   imports.forEach(i => {
     const node = i.node;
     const source = node.source.value;
-    const kind = node.importKind || 'value';
+    const kind = node.importKind || "value";
 
     if (!newImports[kind]) {
       newImports[kind] = {};
@@ -66,18 +66,18 @@ module.exports = function(file, api) {
     if (!newImports[kind][source]) {
       newImports[kind][source] = {
         default: null,
-        specifiers: [],
+        specifiers: []
       };
     }
 
     node.specifiers.forEach(specifier => {
-      if (specifier.type === 'ImportDefaultSpecifier') {
+      if (specifier.type === "ImportDefaultSpecifier") {
         newImports[kind][source].default = {
-          name: specifier.local.name,
+          name: specifier.local.name
         };
-      } else if (specifier.type === 'ImportNamespaceSpecifier') {
+      } else if (specifier.type === "ImportNamespaceSpecifier") {
         newImports[kind][source].default = {
-          namespace: specifier.local.name,
+          namespace: specifier.local.name
         };
       } else {
         // Check the specifier has not all ready been placed in
@@ -94,7 +94,7 @@ module.exports = function(file, api) {
         if (!found) {
           newImports[kind][source].specifiers.push({
             local: specifier.local.name,
-            imported: specifier.imported.name,
+            imported: specifier.imported.name
           });
         }
       }
@@ -103,13 +103,13 @@ module.exports = function(file, api) {
 
   let outputImports = [];
   outputImports = outputImports.concat(
-    createOutputImports(newImports['type'], 'type')
+    createOutputImports(newImports["type"], "type")
   );
   outputImports = outputImports.concat(
-    createOutputImports(newImports['value'], 'value')
+    createOutputImports(newImports["value"], "value")
   );
 
-  const comments = root.find(j.Program).get('body', 0).node.comments;
+  const comments = root.find(j.Program).get("body", 0).node.comments;
   root.find(j.ImportDeclaration).remove();
   outputImports.forEach(x => {
     const body = root.get().value.program.body;
@@ -117,9 +117,9 @@ module.exports = function(file, api) {
   });
 
   root.get().node.comments = comments;
-  let source = root.toSource({ quote: 'single' });
-  source = source.replace(/\/\/\$\$BLANK_LINE\n\n/g, '//$$$BLANK_LINE\n');
-  return source.replace(/\/\/\$\$BLANK_LINE/g, '');
+  let source = root.toSource({ quote: "single" });
+  source = source.replace(/\/\/\$\$BLANK_LINE\n\n/g, "//$$$BLANK_LINE\n");
+  return source.replace(/\/\/\$\$BLANK_LINE/g, "");
 };
 
 function createOutputImports(newImports, kind) {
@@ -139,7 +139,7 @@ function createOutputImports(newImports, kind) {
       nodeModules[key] = newImports[key];
     } else if (thirdPartyModules.indexOf(key) > -1) {
       thirdPartyImports[key] = newImports[key];
-    } else if (key.startsWith('.')) {
+    } else if (key.startsWith(".")) {
       localImports[key] = newImports[key];
     } else {
       firstPartyImports[key] = newImports[key];
@@ -155,7 +155,7 @@ function createOutputImports(newImports, kind) {
     .reverse();
   const localKeys = Object.keys(localImports).sort(importSortFunc).reverse();
 
-  const blankLine = '//$$BLANK_LINE';
+  const blankLine = "//$$BLANK_LINE";
 
   function pushImports(keys) {
     if (keys.length > 0) {
