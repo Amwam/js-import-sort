@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "find-root": "^1.0.0",
-    "jscodeshift": "^0.3.30"
+    "jscodeshift": "^0.4.0"
   },
   "devDependencies": {
     "eslint": "^4.1.0",
