@@ -146,14 +146,18 @@ function createOutputImports(newImports, kind) {
     }
   });
 
-  const nodeKeys = Object.keys(nodeModules).sort(importSortFunc).reverse();
+  const nodeKeys = Object.keys(nodeModules)
+    .sort(importSortFunc)
+    .reverse();
   const thirdKeys = Object.keys(thirdPartyImports)
     .sort(importSortFunc)
     .reverse();
   const firstKeys = Object.keys(firstPartyImports)
     .sort(importSortFunc)
     .reverse();
-  const localKeys = Object.keys(localImports).sort(importSortFunc).reverse();
+  const localKeys = Object.keys(localImports)
+    .sort(importSortFunc)
+    .reverse();
 
   const blankLine = "//$$BLANK_LINE";
 
