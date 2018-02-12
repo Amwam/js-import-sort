@@ -8,6 +8,7 @@ import {ZMain}  from 'aaaa';
 import First from 'zzz';
 import {Third} from 'zzz';
 
+import nodeSubmodule from 'util/submodule';
 import {Second} from 'zzz';
 
 import * as someDefault from 'bbb';
@@ -19,6 +20,7 @@ import SomeClass from './MyModule';
 import AnotherClass from '../../Module1';
 
 import * as util from 'util';
+import submodule from 'dependency/submodule';
 
 import 'yyy';
 
