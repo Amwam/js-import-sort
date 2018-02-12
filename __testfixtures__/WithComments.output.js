@@ -6,9 +6,8 @@ import nodeSubmodule from 'util/submodule';
 
 import module from 'dependency';
 import submodule from 'dependency/submodule';
-
-import module from 'dependency';
 import devModule from 'dev-dependency';
+import devSubmodule from 'dev-dependency/submodule';
 
 import Main, { ZMain } from 'aaaa';
 import * as someDefault from 'bbb';
