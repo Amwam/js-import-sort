@@ -1,6 +1,6 @@
 import * as util from 'util';
 
-import 'jscodeshift';
+import 'dependency';
 
 import Main, { ZMain } from 'aaaa';
 import * as someDefault from 'bbb';

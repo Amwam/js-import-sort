@@ -1,4 +1,4 @@
-JS-Import-Sort  
+# JS-Import-Sort
 
 ![Travis-CI](https://travis-ci.org/Amwam/js-import-sort.svg?branch=master) [![npm version](https://badge.fury.io/js/js-import-sort.svg)](https://badge.fury.io/js/js-import-sort) [![Greenkeeper badge](https://badges.greenkeeper.io/Amwam/js-import-sort.svg)](https://greenkeeper.io/)
 
@@ -7,7 +7,7 @@ JS-Import-Sort
 
 A JS codemod to sort imports
 
-##Intro
+## Intro
 Built on top of [facebook/jscodeshift](https://github.com/facebook/jscodeshift)
 
 This will transform a JS file, sorting and organising its imports (ES2015/ES6).
@@ -54,9 +54,9 @@ Becomes:
    import SomeClass from './MyModule';
 ```
 
-Imports are separated by node, dependencies in `package.json`, other, and relative imports.
- 
-##Running
+Imports are separated by node, dependencies and devDependencies in `package.json`, other, and relative imports.
+
+## Running
 To run, just run:
 
     js-import-sort --path ./*
