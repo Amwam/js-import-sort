@@ -4,7 +4,7 @@ This is some comment
 import Main from 'aaaa';
 import {ZMain}  from 'aaaa';
 
-
+import devSubmodule from 'dev-dependency/submodule';
 import First from 'zzz';
 import {Third} from 'zzz';
 
