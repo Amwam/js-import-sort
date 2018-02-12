@@ -1,4 +1,5 @@
 jest.autoMockOff();
+jest.mock('find-root', () => jest.fn(() => '../__tests__'));
 const defineTest = require('jscodeshift/dist/testUtils').defineTest;
 defineTest(__dirname, 'transform', null, 'WithoutComments');
 defineTest(__dirname, 'transform', null, 'WithComments');

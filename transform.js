@@ -135,9 +135,10 @@ function createOutputImports(newImports, kind) {
   const outputImports = [];
 
   Object.keys(newImports).forEach(key => {
-    if (builtInModules.indexOf(key) > -1) {
+    const baseKey = key.split("/")[0];
+    if (builtInModules.indexOf(baseKey) > -1) {
       nodeModules[key] = newImports[key];
-    } else if (thirdPartyModules.indexOf(key) > -1) {
+    } else if (thirdPartyModules.indexOf(baseKey) > -1) {
       thirdPartyImports[key] = newImports[key];
     } else if (key.startsWith(".")) {
       localImports[key] = newImports[key];

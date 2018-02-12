@@ -2,6 +2,10 @@
 This is some comment
  */
 import * as util from 'util';
+import nodeSubmodule from 'util/submodule';
+
+import module from 'dependency';
+import submodule from 'dependency/submodule';
 
 import Main, { ZMain } from 'aaaa';
 import * as someDefault from 'bbb';
