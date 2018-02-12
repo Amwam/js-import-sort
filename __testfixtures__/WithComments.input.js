@@ -14,9 +14,12 @@ import * as someDefault from 'bbb';
 
 import {a as b} from 'ccc';
 
+import devModule from 'dev-dependency';
 import SomeClass from './MyModule';
 import AnotherClass from '../../Module1';
 
 import * as util from 'util';
 
 import 'yyy';
+
+import module from 'dependency';
