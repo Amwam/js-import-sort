@@ -42,7 +42,22 @@ function createImportStatement(moduleName, variableName, propName, kind) {
 
 module.exports = function(file, api) {
   const j = api.jscodeshift;
-  const root = j(file.source);
+  // https://babeljs.io/docs/en/babel-parser#plugins
+  const root = j(require('@babel/parser').parse(file.source, {
+    sourceType: 'module',
+    proposal: true,
+    plugins: [
+      'jsx',
+      'asyncGenerators',
+      'classProperties',
+      'decorators-legacy',
+      'dynamicImport',
+      'exportDefaultFrom',
+      'exportNamespaceFrom',
+      'objectRestSpread',
+      'optionalChaining',
+    ]
+  }));
   const imports = root.find(j.ImportDeclaration);
 
   // No imports, leave as is
