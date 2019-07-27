@@ -45,7 +45,6 @@ module.exports = function(file, api) {
   // https://babeljs.io/docs/en/babel-parser#plugins
   const root = j(require('@babel/parser').parse(file.source, {
     sourceType: 'module',
-    proposal: true,
     plugins: [
       'jsx',
       'asyncGenerators',
@@ -56,7 +55,7 @@ module.exports = function(file, api) {
       'exportNamespaceFrom',
       'objectRestSpread',
       'optionalChaining',
-    ]
+    ],
   }));
   const imports = root.find(j.ImportDeclaration);
 
