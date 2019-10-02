@@ -3,7 +3,7 @@ const builtInModules = require("./lib/builtInModules").default;
 const thirdPartyModules = require("./lib/thirdPartyModules").default;
 const importSortFunc = require("./lib/importSort").default;
 const jscodeshift = require("jscodeshift");
-const prettier = require('prettier');
+const prettier = require("prettier");
 
 function createImportStatement(moduleName, variableName, propName, kind) {
   let declaration;
@@ -120,7 +120,9 @@ module.exports = function(file, api) {
   root.get().node.comments = comments;
   let source = root.toSource({ quote: "single" });
   source = source.replace(/\/\/\$\$BLANK_LINE\n\n/g, "//$$$BLANK_LINE\n");
-  return prettier.format(source.replace(/\/\/\$\$BLANK_LINE/g, ""), {parser: 'babel'});
+  return prettier.format(source.replace(/\/\/\$\$BLANK_LINE/g, ""), {
+    parser: "babel"
+  });
 };
 
 function createOutputImports(newImports, kind) {
