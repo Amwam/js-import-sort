@@ -1,3 +1,3 @@
-import Thing from 'package';
+import Thing from "package";
 
 const variable = 0;
