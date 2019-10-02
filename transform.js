@@ -163,10 +163,9 @@ function createOutputImports(newImports, kind, options) {
     .sort(importSortFunc)
     .reverse();
 
-
   let blankLine = "//$$BLANK_LINE";
-  if (options['blank-lines'] === false){
-    blankLine = ''
+  if (options["blank-lines"] === false) {
+    blankLine = "";
   }
 
   function pushImports(keys) {
