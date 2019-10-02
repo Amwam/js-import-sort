@@ -22,5 +22,6 @@ jobs:
         yarn install
         yarn test
         yarn lint
+        yarn prettier_check
       env:
         CI: true
