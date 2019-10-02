@@ -21,6 +21,6 @@ jobs:
       run: |
         yarn install
         yarn test
-        yarn eslint
+        yarn lint
       env:
         CI: true
