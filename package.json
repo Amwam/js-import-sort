@@ -1,7 +1,7 @@
 {
   "name": "js-import-sort",
   "author": "Amit Shah",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "description": "A jS Codemode to sort/organise imports",
   "repository": "https://github.com/Amwam/js-import-sort",
   "main": "./index.js",
@@ -16,14 +16,15 @@
   },
   "dependencies": {
     "find-root": "^1.1.0",
-    "jscodeshift": "^0.6.4"
+    "jscodeshift": "^0.6.4",
+    "nomnom": "^1.8.1",
+    "prettier": "^1.18.2"
   },
   "devDependencies": {
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-jest": "^22.17.0",
-    "jest": "^24.9.0",
-    "prettier": "^1.18.2"
+    "jest": "^24.9.0"
   },
   "jest": {
     "collectCoverage": true
