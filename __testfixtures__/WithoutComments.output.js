@@ -1,12 +1,12 @@
-import * as util from 'util';
+import * as util from "util";
 
-import 'dependency';
+import "dependency";
 
-import Main, { ZMain } from 'aaaa';
-import * as someDefault from 'bbb';
-import { a as b } from 'ccc';
-import 'yyy';
-import First, { Second, Third } from 'zzz';
+import Main, { ZMain } from "aaaa";
+import * as someDefault from "bbb";
+import { a as b } from "ccc";
+import "yyy";
+import First, { Second, Third } from "zzz";
 
-import AnotherClass from '../../Module1';
-import SomeClass from './MyModule';
+import AnotherClass from "../../Module1";
+import SomeClass from "./MyModule";

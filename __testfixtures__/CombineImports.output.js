@@ -1,2 +1,2 @@
-import { Bouncer } from '../Bouncer';
-import Errors from './Errors';
+import { Bouncer, Other } from "../Bouncer";
+import Errors from "./Errors";

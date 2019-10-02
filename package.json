@@ -8,21 +8,21 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint ./",
-    "prettier": "prettier --semi --write ./*.js"
+    "prettier": "prettier --semi --write ./*.js ./lib/*.js"
   },
   "bin": {
     "js-import-sort": "./cli.js"
   },
   "dependencies": {
-    "find-root": "^1.0.0",
-    "jscodeshift": "^0.3.30"
+    "find-root": "^1.1.0",
+    "jscodeshift": "^0.6.4"
   },
   "devDependencies": {
-    "eslint": "^4.1.0",
-    "eslint-config-prettier": "^4.0.0",
-    "eslint-plugin-jest": "^22.0.0",
-    "jest": "^22.0.6",
-    "prettier": "^1.3.1"
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-jest": "^22.17.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2"
   },
   "jest": {
     "collectCoverage": true
