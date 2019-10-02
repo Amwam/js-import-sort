@@ -41,7 +41,7 @@ function createImportStatement(moduleName, variableName, propName, kind) {
   return declaration;
 }
 
-module.exports = function(file, api) {
+module.exports = function(file, api, options) {
   const j = api.jscodeshift;
   const root = j(file.source);
   const imports = root.find(j.ImportDeclaration);
@@ -104,10 +104,10 @@ module.exports = function(file, api) {
 
   let outputImports = [];
   outputImports = outputImports.concat(
-    createOutputImports(newImports["type"], "type")
+    createOutputImports(newImports["type"], "type", options)
   );
   outputImports = outputImports.concat(
-    createOutputImports(newImports["value"], "value")
+    createOutputImports(newImports["value"], "value", options)
   );
 
   const comments = root.find(j.Program).get("body", 0).node.comments;
@@ -125,7 +125,7 @@ module.exports = function(file, api) {
   });
 };
 
-function createOutputImports(newImports, kind) {
+function createOutputImports(newImports, kind, options) {
   if (!newImports) {
     return [];
   }
@@ -163,7 +163,10 @@ function createOutputImports(newImports, kind) {
     .sort(importSortFunc)
     .reverse();
 
-  const blankLine = "//$$BLANK_LINE";
+  let blankLine = "//$$BLANK_LINE";
+  if (options["blank-lines"] === false) {
+    blankLine = "";
+  }
 
   function pushImports(keys) {
     if (keys.length > 0) {
